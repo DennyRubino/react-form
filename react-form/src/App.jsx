@@ -5,13 +5,26 @@ import "./App.css";
 function App() {
   const [articles, setArticles] = useState(articlesData);
   const [newArticleTitle, setNewArticleTitle] = useState("");
+  const [newArticleAuthor, setNewArticleAuthor] = useState("");
+  const [newArticleContent, setNewArticleContent] = useState("");
+  const [newArticleCategory, setNewArticleCategory] = useState("categoria");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const newArticle = { id: Date.now(), title: newArticleTitle };
+    const newArticle = {
+      id: Date.now(),
+      title: newArticleTitle,
+      author: newArticleAuthor,
+      content: newArticleContent,
+      category: newArticleCategory,
+    };
+
     setArticles([...articles, newArticle]);
     setNewArticleTitle("");
+    setNewArticleAuthor("");
+    setNewArticleContent("");
+    setNewArticleCategory("categoria");
   };
 
   return (
@@ -21,6 +34,13 @@ function App() {
         {articles.map((article) => (
           <li key={article.id}>
             <h2>{article.title}</h2>
+            <p>
+              <strong>Autore:</strong> {article.author}
+            </p>
+            <p>
+              <strong>Categoria:</strong> {article.category}
+            </p>
+            <p>{article.content}</p>
           </li>
         ))}
       </ul>
@@ -33,6 +53,26 @@ function App() {
           value={newArticleTitle}
           onChange={(e) => setNewArticleTitle(e.target.value)}
         />
+        <input
+          type="text"
+          placeholder="Autore"
+          value={newArticleAuthor}
+          onChange={(e) => setNewArticleAuthor(e.target.value)}
+        />
+        <textarea
+          placeholder="Contenuto dell'articolo"
+          value={newArticleContent}
+          onChange={(e) => setNewArticleContent(e.target.value)}
+        />
+        <select
+          value={newArticleCategory}
+          onChange={(e) => setNewArticleCategory(e.target.value)}
+        >
+          <option value="categoria"> -</option>
+          <option value="FrontEnd">FrontEnd</option>
+          <option value="BackEnd">BackEnd</option>
+          <option value="UI/UX">UI/UX</option>
+        </select>
         <button type="submit">Aggiungi Articolo</button>
       </form>
     </div>
